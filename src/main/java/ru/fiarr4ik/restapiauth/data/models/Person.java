@@ -11,8 +11,12 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-    /**
+import java.time.LocalDateTime;
+
+/**
      * <h1> Сущность пользователя. </h1>
      */
     @Entity
@@ -42,11 +46,12 @@ import lombok.NoArgsConstructor;
         /**
          * Имя пользователя.
          * <p> Параметры поля: </p>
-         * <p> Не пустое. </p>
+         * <p> Не пустое, уникальное. </p>
          */
         @Column(
                 name = "username",
-                nullable = false
+                nullable = false,
+                unique = true
         )
         private String username;
 
@@ -87,4 +92,15 @@ import lombok.NoArgsConstructor;
         )
         private Role role;
 
+        @CreationTimestamp
+        @Column(
+                name = "created_at"
+        )
+        private LocalDateTime createdAt;
+
+        @UpdateTimestamp
+        @Column(
+                name = "updated_at"
+        )
+        private LocalDateTime updatedAt;
     }
