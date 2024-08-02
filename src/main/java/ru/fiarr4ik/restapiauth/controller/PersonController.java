@@ -49,7 +49,9 @@ import java.util.List;
         @Operation(
                 summary = "Регистрация пользователя."
         )
-        @PutMapping("/signup")
+        @PutMapping(
+                value = "/signup"
+        )
         public ResponseEntity<HttpStatus> savePerson(
             @Parameter(description = "Экземпляр DTO пользователя.") @RequestBody @Valid PersonDTO personDTO,
             BindingResult bindingResult
