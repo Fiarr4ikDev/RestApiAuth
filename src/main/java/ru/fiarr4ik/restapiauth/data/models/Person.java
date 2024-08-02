@@ -5,102 +5,59 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
-
-/**
-     * <h1> Сущность пользователя. </h1>
-     */
-    @Entity
     @Data
     @NoArgsConstructor
-    @AllArgsConstructor
+    @Entity
     @Table(
-            name = "person"
+            name = "Person"
     )
     public class Person {
 
-        /**
-         * Уникальный id пользователя типа {@link Long}.
-         * <p> Параметры поля: </p>
-         * <p> Не пустое. </p>
-         */
-        @Column(
-                name = "id",
-                nullable = false
-        )
         @Id
         @GeneratedValue(
                 strategy = GenerationType.IDENTITY
         )
-        private Long id;
-
-        /**
-         * Имя пользователя.
-         * <p> Параметры поля: </p>
-         * <p> Не пустое, уникальное. </p>
-         */
         @Column(
-                name = "username",
-                nullable = false,
-                unique = true
+                name = "id"
+        )
+        private int id;
+
+        @NotEmpty(
+                message = "Имя не должно быть пустым"
+        )
+        @Size(
+                min = 2,
+                max = 100,
+                message = "Имя должно быть от 2 до 100 символов длиной"
+        )
+        @Column(
+                name = "username"
         )
         private String username;
 
-        /**
-         * Почта пользователя.
-         * <p> Параметры поля: </p>
-         * <p> Не пустое, уникальное. </p>
-         */
-        @Column(
-                name = "mail",
-                nullable = false,
-                unique = true
+        @Min(
+                value = 1900,
+                message = "Год рождения должен быть больше, чем 1900"
         )
-        private String mail;
-
-        /**
-         * Пароль пользователя.
-         * <p> Параметры поля: </p>
-         * <p> Не пустое. </p>
-         */
         @Column(
-                name = "password",
-                nullable = false
+                name = "year_of_birth"
+        )
+        private int yearOfBirth;
+
+        @Column(
+                name = "password"
         )
         private String password;
 
-        /**
-         * Роль человека.
-         * <p> Параметры поля: </p>
-         * <p> Присоединяется поле {@link Role#getId()}. </p>
-         * <p> Не пустое. </p>
-         */
-        @ManyToOne
-        @JoinColumn(
-                name = "role_id",
-                referencedColumnName = "id",
-                nullable = false
-        )
-        private Role role;
-
-        @CreationTimestamp
         @Column(
-                name = "created_at"
+                name = "role"
         )
-        private LocalDateTime createdAt;
-
-        @UpdateTimestamp
-        @Column(
-                name = "updated_at"
-        )
-        private LocalDateTime updatedAt;
+        private String role;
     }

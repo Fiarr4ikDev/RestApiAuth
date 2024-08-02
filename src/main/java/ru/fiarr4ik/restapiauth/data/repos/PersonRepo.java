@@ -6,12 +6,8 @@ import ru.fiarr4ik.restapiauth.data.models.Person;
 
 import java.util.Optional;
 
-    /**
-     * Репозиторий для работы с таблицой базы данных пользователя.
-     */
     @Repository
-    public interface PersonRepository extends JpaRepository<Person, Long> {
+    public interface PersonRepo extends JpaRepository<Person, Integer> {
 
         Optional<Person> findByUsername(String username);
-
     }
