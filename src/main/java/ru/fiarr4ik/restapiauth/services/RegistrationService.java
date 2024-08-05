@@ -1,27 +1,24 @@
 package ru.fiarr4ik.restapiauth.services;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.fiarr4ik.restapiauth.data.models.Person;
-import ru.fiarr4ik.restapiauth.data.repos.PersonRepo;
+import ru.fiarr4ik.restapiauth.data.entity.User;
+import ru.fiarr4ik.restapiauth.data.repository.UserRepository;
+import ru.fiarr4ik.restapiauth.enums.ERole;
 
-    @Service
+@Service
     public class RegistrationService {
 
-        private final PersonRepo personRepo;
-        private PasswordEncoder passwordEncoder;
+        private final UserRepository userRepository;
 
         @Autowired
-        public RegistrationService(PersonRepo personRepo) {
-            this.personRepo = personRepo;
+        public RegistrationService(UserRepository userRepository, MappingService mappingService) {
+            this.userRepository = userRepository;
+
         }
 
-        @Transactional
-        public void register(Person person) {
-            person.setPassword(passwordEncoder.encode(person.getPassword()));
-            person.setRole("USER");
-            personRepo.save(person);
+        public User registerUser(User user) {
+            user.setERole(ERole.USER);
+            return userRepository.save(user);
         }
     }
