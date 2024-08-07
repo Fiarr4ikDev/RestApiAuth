@@ -1,7 +1,6 @@
-package ru.fiarr4ik.restapiauth.enums;
+package ru.fiarr4ik.restapiauth.data.enums;
 
     public enum ERole {
-
         USER,
         ADMIN
     }
